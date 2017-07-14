@@ -1,0 +1,29 @@
+version: '2'
+services:
+  jenkins:
+    image: jenkins
+    container_name: jenkins
+    networks:
+      - ci
+    ports:
+      - 8080:8080
+    volumes:
+#     - "/var/docker/jenkins/data:/var/lib/jenkins/"
+      - "jenkins:/var/lib/jenkins"
+    restart: always
+  gogs:
+    image: gogs/gogs
+    container_name: gogs
+    networks:
+      - ci
+    volumes:
+      - "gogs:/data"
+    ports:
+      - 3000:3000
+      - 1022:22
+    restart: always
+volumes:
+  gogs: {}
+  jenkins: {}
+networks:
+  ci: {}
