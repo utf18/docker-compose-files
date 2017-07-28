@@ -1,2 +1,3 @@
 # docker-compose-files
-some simple compose files for my needs
+
+compose files for projects and and tinkering

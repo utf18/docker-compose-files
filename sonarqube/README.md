@@ -1,0 +1,3 @@
+- adress: localhost:9000
+- user: admin
+- pw:   admin

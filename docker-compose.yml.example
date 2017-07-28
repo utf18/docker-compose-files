@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+
+  serviceName:
+    image: foo/foo
+    container_name: foo
+    ports:
+      - "X000:X000"
+    volumes:
+      - "foo:/var/lib/foo"
+    environment:
+        foo: 'bar'
+    restart: always
+
+volumes:
+  foo:
