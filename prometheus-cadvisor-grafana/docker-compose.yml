@@ -17,14 +17,10 @@ services:
     ports:
       - 9091:9091
 
-  prometheus-server:
+  prometheus:
     image: prom/prometheus
     ports:
       - 9090:9090
-    links:
-      - cadvisor:cadvisor
-      - node-exporter:node-exporter
-      - metrics-gateway:metrics-gateway
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
@@ -35,15 +31,22 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
-    command: '-collector.procfs=/host/proc -collector.sysfs=/host/sys -collector.filesystem.ignored-mount-points="^(/rootfs|/host|)/(sys|proc|dev|host|etc)($$|/)" collector.filesystem.ignored-fs-types="^(sys|proc|auto|cgroup|devpts|ns|au|fuse\.lxc|mqueue)(fs|)$$"'
     expose:
       - 9100
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    ports:
+      - 9115:9115
+    volumes:
+      - ./prometheus/blackbox.yml
 
   grafana:
     image: grafana/grafana
     ports:
       - 3000:3000
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=password
-    links:
-      - prometheus-server:prometheus
