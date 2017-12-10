@@ -30,9 +30,9 @@ services:
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-      - /:/rootfs:ro
     expose:
       - 9100
+    network_mode: host
 
   blackbox-exporter:
     image: prom/blackbox-exporter
@@ -46,7 +46,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      #- ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=password
