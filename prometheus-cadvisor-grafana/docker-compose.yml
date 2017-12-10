@@ -39,7 +39,7 @@ services:
     ports:
       - 127.0.0.1:9115:9115
     volumes:
-      - ./prometheus/blackbox.yml
+      - ./prometheus/blackbox.yml:/etc/blackbox_exporter/blackbox.yml
 
   grafana:
     image: grafana/grafana
