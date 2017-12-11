@@ -30,9 +30,9 @@ services:
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-    expose:
-      - 9100
-    network_mode: host
+    ports:
+      - 127.0.0.1:9100:9100
+#    network_mode: host
 
   blackbox-exporter:
     image: prom/blackbox-exporter
