@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+  zeppelin:
+    image: dylanmei/zeppelin
+    container_name: zeppelin
+    environment:
+      ZEPPELIN_PORT: 8090
+      ZEPPELIN_JAVA_OPTS: >-
+        -Dspark.driver.memory=1g
+        -Dspark.executor.memory=2g
+      MASTER: local[*]
+    ports:
+      - 8090:8090
+    volumes:
+      - ./data:/usr/zeppelin/data
+      - ./notebooks:/usr/zeppelin/notebook
+    restart: always
+
+  postgres:
+    image: postgres
+    volumes:
+      - ./psql_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+    restart: always
