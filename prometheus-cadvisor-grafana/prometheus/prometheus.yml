@@ -4,21 +4,8 @@ global:
   evaluation_interval: 30s
   # scrape_timeout is set to the global default (10s).
 
-  external_labels:
-    monitor: codelab
-    foo:     bar
-
-rule_files:
-- "first.rules"
-- "my/*.rules"
-
-
-remote_read:
-  - url: http://diffus.org
-    read_recent: true
-
-
 scrape_configs:
+
 - job_name: prometheus
 
   honor_labels: true
@@ -38,7 +25,7 @@ scrape_configs:
       - bar/*.yaml
 
   static_configs:
-  - targets: ['localhost:9090', 'localhost:9191']
+  - targets: ['localhost:9090']
     labels:
       my:   label
       your: label
@@ -57,24 +44,15 @@ scrape_configs:
     replacement:   static
     target_label:  abc
 
-  bearer_token_file: valid_token_file
 
+- job_name: node-exporter
+  metrics_path: /metrics
+  static_configs:
+    - targets:
+      - node-exporter:9100
 
-
-
-
-# - job_name: foo
-#   metrics_path: /metrics
-#   static_configs:
-#     - targets:
-#       - localhost:9090
-
-
-# alerting:
-#   alertmanagers:
-#   - scheme: https
-#     static_configs:
-#     - targets:
-#       - "1.2.3.4:9093"
-#       - "1.2.3.5:9093"
-#       - "1.2.3.6:9093"
+- job_name: blackbox-exporter
+  metrics_path: /metrics
+  static_configs:
+    - targets:
+      - blackbox-exporter:9115
