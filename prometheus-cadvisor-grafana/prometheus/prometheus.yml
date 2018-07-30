@@ -61,4 +61,4 @@ scrape_configs:
   metrics_path: /metrics
   static_configs:
     - targets:
-      - cadvisor:9115
+      - cadvisor:8080
