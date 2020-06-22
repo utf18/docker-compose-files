@@ -1,13 +1,14 @@
-version: '2'
+version: '3.7'
 services:
   jenkins:
-    image: jenkins
+    image: jenkins/jenkins:lts
     container_name: jenkins
     ports:
       - 8080:8080
+      - 50000:50000
     volumes:
-#     - "/var/docker/jenkins/data:/var/lib/jenkins/"
-      - "jenkins:/var/lib/jenkins"
+      # - "/home/username/jenkins:/var/jenkins_home"
+      - jenkins:/var/jenkins_home
     restart: always
 volumes:
   jenkins: {}
